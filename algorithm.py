@@ -62,12 +62,25 @@ def selection_sort(nums):
         nums[i], nums[k] = nums[k], nums[i]
 
 
+def insertion_sort(nums):
+    """插入排序法
+    遍历 left的长度i，从后往前遍历left中的元素nums【k】，如果nums【k】大于nums【k+1】，将它们交换，否则结束循环，进入下一个i
+    """
+    n = len(nums)
+    for i in range(1, n):
+        for k in range(i-1, -1, -1):
+            if nums[k] > nums[k+1]:
+                nums[k], nums[k+1] = nums[k+1], nums[k]
+            else:
+                break
+
+
 if __name__ == '__main__':
     print('\n例五：随机生成测试')
     N = 20
-    nums = [randint(0, 100) for i in range(0)]
+    nums = [randint(0, 100) for i in range(20)]
     print(nums)
     print('期望的结果：', sorted(nums))
-    selection_sort(nums)
+    insertion_sort(nums)
     print('我的结果：', nums)
     # print(my_min(nums))
