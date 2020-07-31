@@ -75,12 +75,101 @@ def insertion_sort(nums):
                 break
 
 
+def merge_sort(nums, l=0, r=-1):
+    """归并排序法
+    锚例当前排序的部分只有一个元素的时候，直接返回。
+    将列表分成左右两边。
+    递归调用排序方法，对左边部分进行排序。
+    递归调用排序方法，对右边部分进行排序。
+    将左边和右边拷贝一份，然后合并到原来的位置。
+    """
+    n = len(nums)
+    if r == -1:
+        r = n
+    if r - l == 1:
+        return
+    m = (l + r) // 2
+    merge_sort(nums, l, m)
+    merge_sort(nums, m, r)
+    a1 = nums[l:m]
+    a2 = nums[m:r]
+    k = l
+    i = 0
+    j = 0
+    while k < r:
+        if i >= len(a1):
+            nums[k] = a2[j]
+            j += 1
+        elif j >= len(a2):
+            nums[k] = a1[i]
+            i += 1
+        elif a1[i] < a2[j]:
+            nums[k] = a1[i]
+            i += 1
+        else:
+            nums[k] = a2[j]
+            j += 1
+        k += 1
+
+
+def merge_sort1(nums, l=0, r=-1):
+    n = len(nums)
+    if r == -1:
+        r = n
+    if r - l == 1:
+        return
+    m = (l + r) // 2
+    merge_sort1(nums, l, m)
+    merge_sort1(nums, m, r)
+    a1 = nums[l:m]
+    a2 = nums[m:r]
+    k = l
+    i = 0
+    j = 0
+    while k < r:
+        if i >= len(a1):
+            nums[k] = a2[j]
+            j += 1
+        elif j >= len(a2):
+            nums[k] = a1[i]
+            i += 1
+        elif a1[i] < a2[j]:
+            nums[k] = a1[i]
+            i += 1
+        else:
+            nums[k] = a2[j]
+            j += 1
+        k += 1
+
+
 if __name__ == '__main__':
     print('\n例五：随机生成测试')
     N = 20
-    nums = [randint(0, 100) for i in range(20)]
+    nums = [randint(0, 100) for i in range(10)]
     print(nums)
     print('期望的结果：', sorted(nums))
-    insertion_sort(nums)
-    print('我的结果：', nums)
+    from time import time
+
+    # print('插入排序法：', end='')
+    # t0 = time()
+    # insertion_sort(nums[:])
+    # print('耗时：', time()-t0)
+
+    # print('冒泡排序法：', end='')
+    # t0 = time()
+    # bubble_sort(nums[:])
+    # print('耗时：', time()-t0)
+
+    # print('选择排序法：', end='')
+    # t0 = time()
+    # selection_sort(nums[:])
+    # print('耗时：', time()-t0)
+
+    # print('归并排序法：', end='')
+    # t0 = time()
+    # merge_sort(nums[:])
+    # print('耗时：', time()-t0)
+
+    merge_sort1(nums)
+    print('我的结果  ：', nums)
     # print(my_min(nums))
