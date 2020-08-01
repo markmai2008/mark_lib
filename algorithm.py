@@ -52,7 +52,7 @@ def selection_sort(nums):
     遍历 i，每次将 i 及后面的序列中的最小元素与 i 的位置互换
     """
     n = len(nums)
-    for i, a in enumerate(nums):
+    for i in range(n):
         k = i
         m = nums[i]
         for j in range(i + 1, n):
@@ -142,6 +142,49 @@ def merge_sort1(nums, l=0, r=-1):
         k += 1
 
 
+def quick_sort(nums, l=0, r=-1):
+    """快速排序法
+    定义一个划分操作：选定第一个数作为轴心数，进行一次划分。
+    令轴心数放在一个新的位置，让它左边的全部小于它，右边的全部大于等于它。
+    快速排序就是先将列表进行划分，然后对轴心数左边和右边的子序列分别递归调用这个过程。
+    """
+    n = len(nums)
+    if r == -1:
+        r = n
+    if r - l <= 1:
+        return
+    i = 0
+    j = 0
+    for k in range(l + 1, r):
+        if nums[k] >= nums[l]:
+            j += 1
+        else:
+            i += 1
+            nums[l+i], nums[k] = nums[k], nums[l+i]
+    nums[l], nums[l+i] = nums[l+i], nums[l]
+    quick_sort(nums, l, l + i)
+    quick_sort(nums, l + i + 1, r)
+
+
+# def quick_sort1(nums, l=0, r=-1):
+#     n = len(nums)
+#     if r == -1:
+#         r = n
+#     if r - l <= 1:
+#         return
+#     i = 0
+#     j = 0
+#     for k in range(l + 1, r):
+#         if nums[k] >= nums[l]:
+#             j += 1
+#         else:
+#             i += 1
+#             nums[l+i], nums[k] = nums[k], nums[l+i]
+#     nums[l], nums[l+i] = nums[l+i], nums[l]
+#     quick_sort1(nums, l, l + i)
+#     quick_sort1(nums, l + i + 1, r)
+
+
 if __name__ == '__main__':
     print('\n例五：随机生成测试')
     N = 20
@@ -170,6 +213,11 @@ if __name__ == '__main__':
     # merge_sort(nums[:])
     # print('耗时：', time()-t0)
 
-    merge_sort1(nums)
+    print('快速排序法 ：', end='')
+    t0 = time()
+    quick_sort(nums[:])
+    print('耗时：', time()-t0)
+
+    quick_sort(nums)
     print('我的结果  ：', nums)
     # print(my_min(nums))
